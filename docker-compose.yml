@@ -1,0 +1,50 @@
+version: '3'
+
+networks:
+  docker_env:
+    driver: bridge
+
+services:
+  influxdb:
+    image: influxdb
+    restart: always
+    container_name: influxdb
+    hostname: influxdb
+    ports:
+      - 8086:8086
+    volumes:
+      - "${INFLUXDB_DIR}/etc:/etc/influxdb"
+      - "${INFLUXDB_DIR}/data:/var/lib/influxdb/data"
+      - "${INFLUXDB_DIR}/meta:/var/lib/influxdb/meta"
+      - "${INFLUXDB_DIR}/wal:/var/lib/influxdb/wal"
+    environment:
+      INFLUXDB_ADMIN_PASSWORD: "${INFLUXDB_ADMIN_PASSWORD:-12345678}"
+    networks:
+      - docker_env
+  grafana:
+    image: grafana/grafana
+    restart: always
+    container_name: grafana
+    hostname: grafana
+    user: root
+    ports:
+      - "3000:3000"
+    volumes:
+      - "${GRAFANA_DATA_DIR}/etc:/etc/grafana/"
+      - "${GRAFANA_DATA_DIR}/data:/var/lib/grafana/"
+      - "${GRAFANA_DATA_DIR}/log:/var/log/grafana/"
+    networks:
+      - docker_env
+  redis:
+    image: redis
+    restart: always
+    container_name: redis
+    hostname: redis
+    ports:
+      - 8900:6379
+    volumes:
+      - "${REDIS_DIR}/data:/data"
+    command:
+      redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:-12345678}
+    networks:
+      - docker_env

@@ -1,0 +1,5 @@
+export REDIS_PASSWORD="redis_default_pass"
+alias redis-cli="redis-cli -a ${REDIS_PASSWORD} -p 8900"
+
+export INFLUXDB_ADMIN_PASSWORD="influx_admin_default_pass"
+alias influx="influx -password '$INFLUXDB_ADMIN_PASSWORD' --username admin"

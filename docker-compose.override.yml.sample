@@ -1,0 +1,5 @@
+version: '3'
+services:
+  redis:
+    restart: "no"
+    entrypoint: ["echo", "Service has disabled"]
