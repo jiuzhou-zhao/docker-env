@@ -30,9 +30,9 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - "${GRAFANA_DATA_DIR}/etc:/etc/grafana/"
-      - "${GRAFANA_DATA_DIR}/data:/var/lib/grafana/"
-      - "${GRAFANA_DATA_DIR}/log:/var/log/grafana/"
+      - "${GRAFANA_DIR}/etc:/etc/grafana/"
+      - "${GRAFANA_DIR}/data:/var/lib/grafana/"
+      - "${GRAFANA_DIR}/log:/var/log/grafana/"
     networks:
       - docker_env
   redis:
@@ -46,5 +46,20 @@ services:
       - "${REDIS_DIR}/data:/data"
     command:
       redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:-12345678}
+    networks:
+      - docker_env
+  mysql:
+    image: mysql
+    restart: always
+    container_name: mysql
+    hostname: mysql
+    ports:
+      - 8306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-12345678}
+      MYSQL_ROOT_HOST: ${MYSQL_ROOT_HOST}
+    volumes:
+      - "${MYSQL_DIR}/data:/var/lib/mysql"
+      - "${MYSQL_DIR}/config:/etc/mysql/conf.d"
     networks:
       - docker_env
