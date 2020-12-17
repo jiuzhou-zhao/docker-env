@@ -31,6 +31,12 @@ else
   ENABLE_MYSQL=true
 fi
 
+if [[ ${DISABLE_NGINX_PHP} ]] && $DISABLE_NGINX_PHP; then
+  ENABLE_NGINX_PHP=false
+else
+  ENABLE_NGINX_PHP=true
+fi
+
 #
 #
 #
@@ -48,4 +54,8 @@ fi
 
 if $ENABLE_MYSQL; then
   echo "ENABLE MYSQL"
+fi
+
+if $ENABLE_NGINX_PHP; then
+  echo "ENABLE NGINX PHP"
 fi

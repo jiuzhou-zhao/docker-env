@@ -23,7 +23,7 @@ if $ENABLE_INFLUXDB && [[  ! -d ${INFLUXDB_DIR} ]]; then
   echo "new dir ${INFLUXDB_DIR}"
   mkdir -p "${INFLUXDB_DIR}"
   date +%Y-%m-%d_%H-%M-%S > "${INFLUXDB_DIR}/new"
-  docker run -d --name=influx_tmp influxdb
+  docker run -d --name=influx_tmp "${INFLUXDB_IMAGE}"
   docker cp -a influx_tmp:/etc/influxdb/ "${INFLUXDB_DIR}/etc"
   docker rm -f influx_tmp
 fi
@@ -33,7 +33,7 @@ if $ENABLE_GRAFANA && [[  ! -d ${GRAFANA_DIR} ]]; then
   echo "new dir ${GRAFANA_DIR}"
   mkdir -p "${GRAFANA_DIR}"
   date +%Y-%m-%d_%H-%M-%S > "${GRAFANA_DIR}/new"
-  docker run -d --name=grafana_tmp grafana/grafana
+  docker run -d --user root --name=grafana_tmp "${GRAFANA_IMAGE}"
   docker cp -a grafana_tmp:/etc/grafana/ "${GRAFANA_DIR}/etc"
   docker cp -a grafana_tmp:/var/lib/grafana/ "${GRAFANA_DIR}/data"
   docker cp -a grafana_tmp:/var/log/grafana/ "${GRAFANA_DIR}/log"
@@ -48,11 +48,22 @@ if $ENABLE_REDIS && [[  ! -d ${REDIS_DIR} ]]; then
 fi
 
 if $ENABLE_MYSQL && [[  ! -d ${MYSQL_DIR} ]]; then
-  echo "new dir $ENABLE_MYSQL"
+  echo "new dir $MYSQL_DIR"
   mkdir -p "${MYSQL_DIR}"
   date +%Y-%m-%d_%H-%M-%S > "${MYSQL_DIR}/new"
-  docker run -d --name=mysql_tmp mysql
+  docker run -d --name=mysql_tmp "${MYSQL_IMAGE}"
   docker cp -a mysql_tmp:/var/lib/mysql/ "${MYSQL_DIR}/data"
   docker cp -a mysql_tmp:/etc/mysql/conf.d/ "${MYSQL_DIR}/config"
   docker rm -f mysql_tmp
+fi
+
+if $ENABLE_NGINX_PHP && [[  ! -d ${NGINX_DIR} ]]; then
+  echo "new dir $NGINX_DIR"
+  mkdir -p "${NGINX_DIR}"
+  date +%Y-%m-%d_%H-%M-%S > "${NGINX_DIR}/new"
+  docker run -d --name=nginx_tmp "${NGINX_IMAGE}"
+  docker cp -a nginx_tmp:/usr/share/nginx/html/ "${NGINX_DIR}/html"
+  mkdir -p "${NGINX_DIR}/conf.d"
+  docker cp -a nginx_tmp:/var/log/nginx/ "${NGINX_DIR}/logs"
+  docker rm -f nginx_tmp
 fi

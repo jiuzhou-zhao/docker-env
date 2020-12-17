@@ -21,3 +21,7 @@
     ```bash
     make post-init
     ```
+
+---
+---
+只做第`2`步骤，然后可以使用`make update-all`了

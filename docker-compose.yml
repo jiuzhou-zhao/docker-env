@@ -6,7 +6,7 @@ networks:
 
 services:
   influxdb:
-    image: influxdb
+    image: ${INFLUXDB_IMAGE}
     restart: always
     container_name: influxdb
     hostname: influxdb
@@ -22,11 +22,10 @@ services:
     networks:
       - docker_env
   grafana:
-    image: grafana/grafana
+    image: ${GRAFANA_IMAGE}
     restart: always
     container_name: grafana
     hostname: grafana
-    user: root
     ports:
       - "3000:3000"
     volumes:
@@ -36,7 +35,7 @@ services:
     networks:
       - docker_env
   redis:
-    image: redis
+    image: ${REDIS_IMAGE}
     restart: always
     container_name: redis
     hostname: redis
@@ -49,7 +48,7 @@ services:
     networks:
       - docker_env
   mysql:
-    image: mysql
+    image: ${MYSQL_IMAGE}
     restart: always
     container_name: mysql
     hostname: mysql
@@ -61,5 +60,27 @@ services:
     volumes:
       - "${MYSQL_DIR}/data:/var/lib/mysql"
       - "${MYSQL_DIR}/config:/etc/mysql/conf.d"
+    networks:
+      - docker_env
+  nginx:
+    image: ${NGINX_IMAGE}
+    restart: always
+    container_name: nginx
+    hostname: nginx
+    ports:
+      - 80:80
+    volumes:
+      - "${NGINX_DIR}/html:/usr/share/nginx/html"
+      - "${NGINX_DIR}/conf.d:/etc/nginx/conf.d"
+      - "${NGINX_DIR}/logs:/var/log/nginx"
+    networks:
+      - docker_env
+  php:
+    image: ${PHP_IMAGE}
+    restart: always
+    container_name: php
+    hostname: php
+    volumes:
+      - "${NGINX_DIR}/html:/www"
     networks:
       - docker_env
