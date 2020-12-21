@@ -1,14 +1,14 @@
 pre-init:
-	./scripts/pre_init.sh
+	python ./scripts/pre_init.py
 
 daemon:
 	docker-compose up -d
 
 post-init:
-	./scripts/post_init.sh
+	python ./scripts/post_init.py
 
 update-all:
 	docker-compose down
-	./scripts/pre_init.sh false
+	python ./scripts/pre_init.py false
 	docker-compose up -d
-	./scripts/post_init.sh
+	python ./scripts/post_init.py
