@@ -67,3 +67,11 @@ if $ENABLE_NGINX_PHP && [[  ! -d ${NGINX_DIR} ]]; then
   docker cp -a nginx_tmp:/var/log/nginx/ "${NGINX_DIR}/logs"
   docker rm -f nginx_tmp
 fi
+
+if $ENABLE_CASSANDRA && [[  ! -d ${CASSANDRA_DIR} ]]; then
+  echo "new dir ${CASSANDRA_DIR}"
+  mkdir -p "${CASSANDRA_DIR}"
+  mkdir -p "${CASSANDRA_DIR}/0"
+  mkdir -p "${CASSANDRA_DIR}/1"
+  date +%Y-%m-%d_%H-%M-%S > "${CASSANDRA_DIR}/new"
+fi

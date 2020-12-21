@@ -84,3 +84,30 @@ services:
       - "${NGINX_DIR}/html:/www"
     networks:
       - docker_env
+  cassandra-0:
+    image: cassandra
+    restart: always
+    container_name: cassandra-0
+    hostname: cassandra-0
+    ports:
+      - 8042:9042
+      - 8199:7199
+    volumes:
+      - "${CASSANDRA_DIR}/0/data:/var/lib/cassandra"
+    networks:
+      - docker_env
+  cassandra-1:
+    image: cassandra
+    restart: always
+    container_name: cassandra-1
+    hostname: cassandra-1
+    ports:
+      - 8043:9042
+    volumes:
+      - "${CASSANDRA_DIR}/1/data:/var/lib/cassandra"
+    links:
+      - cassandra-0:seed
+    environment:
+      - CASSANDRA_SEEDS=seed
+    networks:
+      - docker_env

@@ -45,12 +45,12 @@ if $ENABLE_MYSQL; then
 fi
 
 if $ENABLE_NGINX_PHP; then
-
-  cat > "${NGINX_DIR}/html/info.php" << "EOF"
+  if [[ -f ${NGINX_DIR}/new ]]; then
+    cat > "${NGINX_DIR}/html/info.php" << "EOF"
 <?php phpinfo(); ?>
 EOF
 
-  cat > "${NGINX_DIR}/conf.d/default.conf" << "EOF"
+    cat > "${NGINX_DIR}/conf.d/default.conf" << "EOF"
 server {
     listen       80;
     listen  [::]:80;
@@ -97,5 +97,6 @@ server {
     #}
 }
 EOF
-  docker-compose restart nginx
+    docker-compose restart nginx
+  fi
 fi

@@ -37,6 +37,12 @@ else
   ENABLE_NGINX_PHP=true
 fi
 
+if [[ ${DISABLE_CASSANDRA} ]] && $DISABLE_CASSANDRA; then
+  ENABLE_CASSANDRA=false
+else
+  ENABLE_CASSANDRA=true
+fi
+
 #
 #
 #
@@ -58,4 +64,8 @@ fi
 
 if $ENABLE_NGINX_PHP; then
   echo "ENABLE NGINX PHP"
+fi
+
+if $ENABLE_CASSANDRA; then
+  echo "ENABLE CASSANDRA"
 fi
