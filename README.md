@@ -18,7 +18,7 @@
                 ```bash
                 请遵医嘱
                ```
-2. install
+2. 初始化 - 没有重试机制，如果哪个服务初始化出错了，则删除掉相应的数据目录重新执行
 
     ```bash
     sudo make update-all
