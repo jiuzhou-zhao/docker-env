@@ -26,6 +26,7 @@ services:
     restart: always
     container_name: grafana
     hostname: grafana
+    user: root
     ports:
       - "3000:3000"
     volumes:
