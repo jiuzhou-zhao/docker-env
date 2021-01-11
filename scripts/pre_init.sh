@@ -64,6 +64,8 @@ if $ENABLE_NGINX_PHP && [[  ! -d ${NGINX_DIR} ]]; then
   docker run -d --name=nginx_tmp "${NGINX_IMAGE}"
   docker cp -a nginx_tmp:/usr/share/nginx/html/ "${NGINX_DIR}/html"
   mkdir -p "${NGINX_DIR}/conf.d"
+  mkdir -p "${NGINX_DIR}/ssl"
+  docker cp -a nginx_tmp:/etc/nginx/nginx.conf "${NGINX_DIR}/nginx.conf"
   docker cp -a nginx_tmp:/var/log/nginx/ "${NGINX_DIR}/logs"
   docker rm -f nginx_tmp
 fi

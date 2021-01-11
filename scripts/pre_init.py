@@ -61,7 +61,9 @@ if not defines.DISABLE_NGINX_PHP and not os.path.exists(defines.NGINX_DIR):
     with open(os.path.join(defines.NGINX_DIR, 'new'), 'w') as file_writer:
         file_writer.write(time.asctime( time.localtime(time.time())))
     os.makedirs(os.path.join(defines.NGINX_DIR, 'conf.d'))
+    os.makedirs(os.path.join(defines.NGINX_DIR, 'ssl'))
     execute_or_fatal('docker run -d --name=nginx_tmp ' + defines.NGINX_IMAGE)
+    execute_or_fatal('docker cp -a nginx_tmp:/etc/nginx/nginx.conf ' + defines.NGINX_DIR + '/nginx.conf')
     execute_or_fatal('docker cp -a nginx_tmp:/usr/share/nginx/html/ ' + defines.NGINX_DIR + '/html')
     execute_or_fatal('docker cp -a nginx_tmp:/var/log/nginx/ ' + defines.NGINX_DIR + '/logs')
     execute_or_fatal('docker rm -f nginx_tmp')
