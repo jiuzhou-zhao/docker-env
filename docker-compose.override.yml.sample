@@ -7,5 +7,7 @@ services:
     restart: "no"
     entrypoint: ["echo", "Service has disabled"]
   phpldapadmin:
+    restart: "no"
     environment:
       - PHPLDAPADMIN_LDAP_HOSTS=172.17.0.1
+      - PHPLDAPADMIN_HTTPS=false
