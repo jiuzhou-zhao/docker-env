@@ -1,5 +1,11 @@
 version: '3'
 services:
-  redis:
+  cassandra-0:
     restart: "no"
     entrypoint: ["echo", "Service has disabled"]
+  cassandra-1:
+    restart: "no"
+    entrypoint: ["echo", "Service has disabled"]
+  phpldapadmin:
+    environment:
+      - PHPLDAPADMIN_LDAP_HOSTS=172.17.0.1

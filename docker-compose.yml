@@ -89,7 +89,7 @@ services:
     networks:
       - docker_env
   cassandra-0:
-    image: cassandra
+    image: ${CASSANDRA_IMAGE}
     restart: always
     container_name: cassandra-0
     hostname: cassandra-0
@@ -101,7 +101,7 @@ services:
     networks:
       - docker_env
   cassandra-1:
-    image: cassandra
+    image: ${CASSANDRA_IMAGE}
     restart: always
     container_name: cassandra-1
     hostname: cassandra-1
@@ -113,5 +113,15 @@ services:
       - cassandra-0:seed
     environment:
       - CASSANDRA_SEEDS=seed
+    networks:
+      - docker_env
+  phpldapadmin:
+    image: ${PHPLDAPADMIN_IMAGE}
+    restart: always
+    container_name: phpldapadmin
+    hostname: phpldapadmin
+    ports:
+      - 8443:443
+      - 8080:80
     networks:
       - docker_env
