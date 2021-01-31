@@ -77,3 +77,10 @@ if $ENABLE_CASSANDRA && [[  ! -d ${CASSANDRA_DIR} ]]; then
   mkdir -p "${CASSANDRA_DIR}/1"
   date +%Y-%m-%d_%H-%M-%S > "${CASSANDRA_DIR}/new"
 fi
+
+if $ENABLE_JAEGER && [[  ! -d ${JAEGER_DIR} ]]; then
+  echo "new dir ${JAEGER_DIR}"
+  mkdir -p "${JAEGER_DIR}"
+  mkdir -p "${JAEGER_DIR}/bader"
+  date +%Y-%m-%d_%H-%M-%S > "${JAEGER_DIR}/new"
+fi

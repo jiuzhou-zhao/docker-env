@@ -43,6 +43,12 @@ else
   ENABLE_CASSANDRA=true
 fi
 
+if [[ ${DISABLE_JAEGER} ]] && $DISABLE_JAEGER; then
+  ENABLE_JAEGER=false
+else
+  ENABLE_JAEGER=true
+fi
+
 #
 #
 #
@@ -68,4 +74,8 @@ fi
 
 if $ENABLE_CASSANDRA; then
   echo "ENABLE CASSANDRA"
+fi
+
+if $ENABLE_JAEGER; then
+  echo "ENABLE JAEGER"
 fi

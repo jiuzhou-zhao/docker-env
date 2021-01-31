@@ -26,6 +26,9 @@ if not defines.DISABLE_GRAFANA and os.path.isfile(os.path.join(defines.GRAFANA_D
     execute_or_fatal('docker restart grafana')
     os.remove(os.path.join(defines.GRAFANA_DIR, 'new'))
 
+if not defines.DISABLE_REDIS and os.path.isfile(os.path.join(defines.REDIS_DIR, 'new')):
+    os.remove(os.path.join(defines.REDIS_DIR, 'new'))
+
 if not defines.DISABLE_MYSQL and os.path.isfile(os.path.join(defines.MYSQL_DIR, 'new')):
     f = NamedTemporaryFile(mode="w+")
     f.write("ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY '"+os.environ['MYSQL_ROOT_PASSWORD'] + "';\n")
@@ -89,3 +92,9 @@ server {
         ''')
     execute_or_fatal('docker-compose restart nginx')
     os.remove(os.path.join(defines.NGINX_DIR, 'new'))
+
+if not defines.DISABLE_CASSANDRA and os.path.isfile(os.path.join(defines.CASSANDRA_DIR, 'new')):
+    os.remove(os.path.join(defines.CASSANDRA_DIR, 'new'))
+
+if not defines.DISABLE_JAEGER and os.path.isfile(os.path.join(defines.JAEGER_DIR, 'new')):
+    os.remove(os.path.join(defines.JAEGER_DIR, 'new'))

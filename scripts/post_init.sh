@@ -31,6 +31,12 @@ if $ENABLE_GRAFANA; then
   fi
 fi
 
+if $ENABLE_REDIS; then
+  if [[ -f ${REDIS_DIR}/new ]]; then
+    rm -rf "${REDIS_DIR}/new"
+  fi
+fi
+
 if $ENABLE_MYSQL; then
   if [[ -f ${MYSQL_DIR}/new ]]; then
     tempFile=$(mktemp -t temp.XXXXXX)
@@ -100,3 +106,16 @@ EOF
     docker-compose restart nginx
   fi
 fi
+
+if $ENABLE_CASSANDRA; then
+  if [[ -f ${CASSANDRA_DIR}/new ]]; then
+    rm -rf "${CASSANDRA_DIR}/new"
+  fi
+fi
+
+if $ENABLE_JAEGER; then
+  if [[ -f ${JAEGER_DIR}/new ]]; then
+    rm -rf "${JAEGER_DIR}/new"
+  fi
+fi
+

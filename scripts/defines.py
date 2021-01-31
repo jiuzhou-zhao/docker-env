@@ -17,7 +17,7 @@ DISABLE_INFLUXDB = False
 DISABLE_MYSQL = False
 DISABLE_NGINX_PHP = False
 DISABLE_CASSANDRA = False
-
+DISABLE_JAEGER = False
 
 if os.path.isfile(cfgFile):
     for line in fileinput.input(cfgFile):
@@ -40,7 +40,8 @@ if not DISABLE_NGINX_PHP:
     logging.info('Enabled nginx and php')
 if not DISABLE_CASSANDRA:
     logging.info('Enabled cassandra')
-
+if not DISABLE_JAEGER:
+    logging.info('Enabled jaeger')
 
 for line in fileinput.input(os.path.join(scriptPath, "..", ".env")):
     line = line.strip()

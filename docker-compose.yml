@@ -125,3 +125,15 @@ services:
       - 8080:80
     networks:
       - docker_env
+  jaeger:
+    image: ${JAEGER_IMAGE}
+    ports:
+      - 6831:6831/udp
+      - 16686:16686
+    volumes:
+      - "${JAEGER_DIR}/bader:/badger"
+    environment:
+      - SPAN_STORAGE_TYPE=badger
+      - BADGER_EPHEMERAL=false
+      - BADGER_DIRECTORY_VALUE=/badger/data
+      - BADGER_DIRECTORY_KEY=/badger/key

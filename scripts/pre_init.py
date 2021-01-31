@@ -75,3 +75,10 @@ if not defines.DISABLE_CASSANDRA and not os.path.exists(defines.CASSANDRA_DIR):
         file_writer.write(time.asctime( time.localtime(time.time())))
     os.makedirs(os.path.join(defines.CASSANDRA_DIR, '0'))
     os.makedirs(os.path.join(defines.CASSANDRA_DIR, '1'))
+
+if not defines.DISABLE_JAEGER and not os.path.exists(defines.JAEGER_DIR):
+    xlog.info('new dir {}'.format(defines.JAEGER_DIR))
+    os.makedirs(defines.JAEGER_DIR)
+    with open(os.path.join(defines.JAEGER_DIR, 'new'), 'w') as file_writer:
+        file_writer.write(time.asctime( time.localtime(time.time())))
+    os.makedirs(os.path.join(defines.JAEGER_DIR, 'bader'))
