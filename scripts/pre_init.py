@@ -38,6 +38,8 @@ if not defines.DISABLE_GRAFANA and not os.path.exists(defines.GRAFANA_DIR):
     execute_or_fatal('docker cp -a grafana_tmp:/var/lib/grafana/ ' + defines.GRAFANA_DIR + '/data')
     execute_or_fatal('docker cp -a grafana_tmp:/var/log/grafana/ ' + defines.GRAFANA_DIR + '/log')
     execute_or_fatal('docker rm -f grafana_tmp')
+    if os.path.isfile(defines.GRAFANA_DIR + '/etc/grafana.ini'):
+        open("test.txt","w+").close()
 
 if not defines.DISABLE_REDIS and not os.path.exists(defines.REDIS_DIR):
     xlog.info('new dir {}'.format(defines.REDIS_DIR))

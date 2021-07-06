@@ -6,6 +6,9 @@ services:
   cassandra-1:
     restart: "no"
     entrypoint: ["echo", "Service has disabled"]
+  jaeger:
+    restart: "no"
+    entrypoint: ["echo", "Service has disabled"]
   phpldapadmin:
     restart: "no"
     environment:

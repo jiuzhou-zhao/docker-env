@@ -28,3 +28,23 @@
 >
 > https://cassandra.apache.org/doc/latest/faq/index.html#what-ports
 >
+>
+
+## 宿主机安装客户端
+
+### Mac
+
+#### redis-cli
+```
+wget https://download.redis.io/releases/redis-6.2.4.tar.gz
+tar zxcv redis-6.2.4.tar.gz
+cd redis-6.2.4
+sudo make install
+```
+
+#### influxdb
+```
+brew tap patdz/influx-cli
+brew update && brew doctor
+brew install influx-cli
+```

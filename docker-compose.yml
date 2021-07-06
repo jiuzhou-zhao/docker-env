@@ -21,6 +21,13 @@ services:
       INFLUXDB_ADMIN_PASSWORD: "${INFLUXDB_ADMIN_PASSWORD:-12345678}"
     networks:
       - docker_env
+  influxui:
+    image: ${INFLUXUI_IMAGE}
+    restart: always
+    container_name: influxui
+    hostname: influxui
+    ports:
+      - 3001:80
   grafana:
     image: ${GRAFANA_IMAGE}
     restart: always
@@ -121,8 +128,8 @@ services:
     container_name: phpldapadmin
     hostname: phpldapadmin
     ports:
-      - 8443:443
-      - 8080:80
+      - 8443:9443
+      - 8080:980
     networks:
       - docker_env
   jaeger:
