@@ -84,3 +84,9 @@ if not defines.DISABLE_JAEGER and not os.path.exists(defines.JAEGER_DIR):
     with open(os.path.join(defines.JAEGER_DIR, 'new'), 'w') as file_writer:
         file_writer.write(time.asctime( time.localtime(time.time())))
     os.makedirs(os.path.join(defines.JAEGER_DIR, 'bader'))
+
+if not defines.DISABLE_REGISTRY and not os.path.exists(defines.REGISTRY_DIR):
+    xlog.info('new dir {}'.format(defines.REGISTRY_DIR))
+    os.makedirs(defines.REGISTRY_DIR)
+    os.makedirs(os.path.join(defines.REGISTRY_DIR, 'data'))
+    os.makedirs(os.path.join(defines.REGISTRY_DIR, 'auth'))

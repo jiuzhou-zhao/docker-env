@@ -98,3 +98,6 @@ if not defines.DISABLE_CASSANDRA and os.path.isfile(os.path.join(defines.CASSAND
 
 if not defines.DISABLE_JAEGER and os.path.isfile(os.path.join(defines.JAEGER_DIR, 'new')):
     os.remove(os.path.join(defines.JAEGER_DIR, 'new'))
+
+if not defines.DISABLE_REGISTRY and os.path.isfile(os.path.join(defines.REGISTRY_DIR, 'new')):
+    os.remove(os.path.join(defines.REGISTRY_DIR, 'new'))

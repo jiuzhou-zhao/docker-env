@@ -149,3 +149,17 @@ services:
       - BADGER_DIRECTORY_KEY=/badger/key
     networks:
       - docker_env
+  registry:
+    image: ${REGISTRY_IMAGE}
+    restart: always
+    container_name: registry
+    hostname: registry
+    ports:
+      - 5000:5000
+    volumes:
+      - "${REGISTRY_DIR}/data:/var/lib/registry"
+      - "${REGISTRY_DIR}/auth:/auth"
+    environment:
+      - REGISTRY_AUTH=htpasswd
+      - REGISTRY_AUTH_HTPASSWD_REALM="Registry Realm"
+      - REGISTRY_AUTH_HTPASSWD_PATH=/auth/htpasswd

@@ -18,6 +18,7 @@ DISABLE_MYSQL = False
 DISABLE_NGINX_PHP = False
 DISABLE_CASSANDRA = False
 DISABLE_JAEGER = False
+DISABLE_REGISTRY = False
 
 if os.path.isfile(cfgFile):
     for line in fileinput.input(cfgFile):
@@ -42,6 +43,8 @@ if not DISABLE_CASSANDRA:
     logging.info('Enabled cassandra')
 if not DISABLE_JAEGER:
     logging.info('Enabled jaeger')
+if not DISABLE_REGISTRY:
+    logging.info('Enabled registry')
 
 for line in fileinput.input(os.path.join(scriptPath, "..", ".env")):
     line = line.strip()
