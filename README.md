@@ -48,3 +48,7 @@ brew tap patdz/influx-cli
 brew update && brew doctor
 brew install influx-cli
 ```
+
+## 其他
+
+* 安装PHP扩展 `docker-php-ext-install xx` 重启容器
