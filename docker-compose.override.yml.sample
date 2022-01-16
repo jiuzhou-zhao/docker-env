@@ -14,3 +14,21 @@ services:
     environment:
       - PHPLDAPADMIN_LDAP_HOSTS=172.17.0.1
       - PHPLDAPADMIN_HTTPS=false
+  influxdb:
+    restart: "no"
+    entrypoint: ["echo", "Service has disabled"]
+  influxui:
+    restart: "no"
+    entrypoint: ["echo", "Service has disabled"]
+  grafana:
+    restart: "no"
+    entrypoint: ["echo", "Service has disabled"]
+  nginx:
+    restart: "no"
+    entrypoint: ["echo", "Service has disabled"]
+  php:
+    restart: "no"
+    entrypoint: ["echo", "Service has disabled"]
+  registry:
+    restart: "no"
+    entrypoint: ["echo", "Service has disabled"]
