@@ -18,7 +18,7 @@ services:
       - "${INFLUXDB_DIR}/meta:/var/lib/influxdb/meta"
       - "${INFLUXDB_DIR}/wal:/var/lib/influxdb/wal"
     environment:
-      INFLUXDB_ADMIN_PASSWORD: "${INFLUXDB_ADMIN_PASSWORD:-12345678}"
+      INFLUXDB_ADMIN_PASSWORD: "${INFLUXDB_ADMIN_PASSWORD:-influx_admin_default_pass}"
     networks:
       - docker_env
   influxui:
@@ -28,20 +28,6 @@ services:
     hostname: influxui
     ports:
       - 3001:80
-  grafana:
-    image: ${GRAFANA_IMAGE}
-    restart: always
-    container_name: grafana
-    hostname: grafana
-    user: root
-    ports:
-      - "3000:3000"
-    volumes:
-      - "${GRAFANA_DIR}/etc:/etc/grafana/"
-      - "${GRAFANA_DIR}/data:/var/lib/grafana/"
-      - "${GRAFANA_DIR}/log:/var/log/grafana/"
-    networks:
-      - docker_env
   redis:
     image: ${REDIS_IMAGE}
     restart: always
@@ -52,7 +38,7 @@ services:
     volumes:
       - "${REDIS_DIR}/data:/data"
     command:
-      redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:-12345678}
+      redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:-redis_default_pass}
     networks:
       - docker_env
   mysql:
@@ -63,103 +49,10 @@ services:
     ports:
       - 8306:3306
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-12345678}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-mysql_root_default_pass}
       MYSQL_ROOT_HOST: ${MYSQL_ROOT_HOST}
     volumes:
       - "${MYSQL_DIR}/data:/var/lib/mysql"
       - "${MYSQL_DIR}/config:/etc/mysql/conf.d"
     networks:
       - docker_env
-  nginx:
-    image: ${NGINX_IMAGE}
-    restart: always
-    container_name: nginx
-    hostname: nginx
-    ports:
-      - 80:80
-      - 443:443
-    volumes:
-      - "${NGINX_DIR}/nginx.conf:/etc/nginx/nginx.conf"
-      - "${NGINX_DIR}/html:/usr/share/nginx/html"
-      - "${NGINX_DIR}/conf.d:/etc/nginx/conf.d"
-      - "${NGINX_DIR}/ssl:/etc/nginx/ssl"
-      - "${NGINX_DIR}/logs:/var/log/nginx"
-    networks:
-      - docker_env
-  php:
-    image: ${PHP_IMAGE}
-    restart: always
-    container_name: php
-    hostname: php
-    volumes:
-      - "${NGINX_DIR}/html:/www"
-    networks:
-      - docker_env
-  cassandra-0:
-    image: ${CASSANDRA_IMAGE}
-    restart: always
-    container_name: cassandra-0
-    hostname: cassandra-0
-    ports:
-      - 8042:9042
-      - 8199:7199
-    volumes:
-      - "${CASSANDRA_DIR}/0/data:/var/lib/cassandra"
-    networks:
-      - docker_env
-  cassandra-1:
-    image: ${CASSANDRA_IMAGE}
-    restart: always
-    container_name: cassandra-1
-    hostname: cassandra-1
-    ports:
-      - 8043:9042
-    volumes:
-      - "${CASSANDRA_DIR}/1/data:/var/lib/cassandra"
-    links:
-      - cassandra-0:seed
-    environment:
-      - CASSANDRA_SEEDS=seed
-    networks:
-      - docker_env
-  phpldapadmin:
-    image: ${PHPLDAPADMIN_IMAGE}
-    restart: always
-    container_name: phpldapadmin
-    hostname: phpldapadmin
-    ports:
-      - 8443:9443
-      - 8080:980
-    networks:
-      - docker_env
-  jaeger:
-    image: ${JAEGER_IMAGE}
-    restart: always
-    container_name: jaeger
-    hostname: jaeger
-    ports:
-      - 6831:6831/udp
-      - 16686:16686
-    volumes:
-      - "${JAEGER_DIR}/bader:/badger"
-    environment:
-      - SPAN_STORAGE_TYPE=badger
-      - BADGER_EPHEMERAL=false
-      - BADGER_DIRECTORY_VALUE=/badger/data
-      - BADGER_DIRECTORY_KEY=/badger/key
-    networks:
-      - docker_env
-  registry:
-    image: ${REGISTRY_IMAGE}
-    restart: always
-    container_name: registry
-    hostname: registry
-    ports:
-      - 5000:5000
-    volumes:
-      - "${REGISTRY_DIR}/data:/var/lib/registry"
-      - "${REGISTRY_DIR}/auth:/auth"
-    environment:
-      - REGISTRY_AUTH=htpasswd
-      - REGISTRY_AUTH_HTPASSWD_REALM="Registry Realm"
-      - REGISTRY_AUTH_HTPASSWD_PATH=/auth/htpasswd

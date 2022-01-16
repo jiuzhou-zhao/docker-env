@@ -1,0 +1,8 @@
+export REDIS_PASSWORD="redis_default_pass"
+alias redis-clie="redis-cli -a ${REDIS_PASSWORD} -p 8900"
+
+export INFLUXDB_ADMIN_PASSWORD="influx_admin_default_pass"
+alias influxe="influx -password '$INFLUXDB_ADMIN_PASSWORD' --username admin"
+
+export MYSQL_ROOT_PASSWORD="mysql_root_default_pass"
+alias mysqle="mysql -h127.0.0.1 -uroot -p$MYSQL_ROOT_PASSWORD --port 8306"

@@ -1,9 +1,10 @@
-import os
+import os,time
 from tempfile import NamedTemporaryFile
 from helper import xlog, execute_or_fatal
 import defines
 
 os.chdir(os.path.join(defines.scriptPath, '..'))
+time.sleep(5)
 
 if not defines.DISABLE_INFLUXDB and os.path.isfile(os.path.join(defines.INFLUXDB_DIR, 'new')):
     execute_or_fatal('docker exec -it influxdb influx -execute "' + 'CREATE USER admin WITH PASSWORD ' +
@@ -35,6 +36,7 @@ if not defines.DISABLE_MYSQL and os.path.isfile(os.path.join(defines.MYSQL_DIR, 
     f.write('FLUSH PRIVILEGES;')
     f.flush()
     execute_or_fatal('docker cp ' + f.name + ' mysql:/tmp/do.sql')
+    time.sleep(5)
     execute_or_fatal('docker exec -it mysql /bin/bash -c "' + 'mysql -uroot -p${MYSQL_ROOT_PASSWORD}</tmp/do.sql' + '"')
     os.remove(os.path.join(defines.MYSQL_DIR, 'new'))
     f.close()

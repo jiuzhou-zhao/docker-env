@@ -11,14 +11,14 @@ cfgFile = os.path.join(scriptPath, "..", "local.cfg")
 
 print (cfgFile)
 
-DISABLE_REDIS = False
-DISABLE_GRAFANA = False
-DISABLE_INFLUXDB = False
-DISABLE_MYSQL = False
-DISABLE_NGINX_PHP = False
-DISABLE_CASSANDRA = False
-DISABLE_JAEGER = False
-DISABLE_REGISTRY = False
+DISABLE_REDIS = True
+DISABLE_GRAFANA = True
+DISABLE_INFLUXDB = True
+DISABLE_MYSQL = True
+DISABLE_NGINX_PHP = True
+DISABLE_CASSANDRA = True
+DISABLE_JAEGER = True
+DISABLE_REGISTRY = True
 
 if os.path.isfile(cfgFile):
     for line in fileinput.input(cfgFile):
@@ -55,3 +55,10 @@ for line in fileinput.input(os.path.join(scriptPath, "..", ".env")):
         continue
     setter = parts[0] + ' = "' + parts[1] + '"'
     exec(setter)
+
+if os.getenv('REDIS_PASSWORD') == None:
+    os.environ['REDIS_PASSWORD']='redis_default_pass'
+if os.getenv('INFLUXDB_ADMIN_PASSWORD') == None:
+    os.environ['INFLUXDB_ADMIN_PASSWORD']='influx_admin_default_pass'
+if os.getenv('MYSQL_ROOT_PASSWORD') == None:
+    os.environ['MYSQL_ROOT_PASSWORD']='mysql_root_default_pass'
